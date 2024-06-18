@@ -1,0 +1,34 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>My Recipes</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for recipe in user_recipes %}
+        <div class="col">
+            <div class="card h-100">
+                {% if recipe.img %}
+                <img src="{{ recipe.img.url }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">{{ recipe.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Created at: {{ recipe.created_at }}</li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'recipeDetail' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                    <form method="POST" action="{% url 'delete_recipe' recipe.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No recipes found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

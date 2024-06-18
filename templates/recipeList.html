@@ -1,0 +1,48 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>All Recipes</h2>
+
+    <form method="GET" action="{% url 'searchRecipes' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" class="form-control" name="q" placeholder="Search by title, cuisine, or dietary restrictions">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for recipe in recipes %}
+        <div class="col">
+            <div class="card h-100">
+                {% if recipe.img %}
+                <img src="{{ recipe.img.url }}" class="card-img-top" alt="{{ recipe.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
+                    <p class="card-text">{{ recipe.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Created by: {{ recipe.created_by.username }}</li>
+                    <li class="list-group-item">Created at: {{ recipe.created_at }}</li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'recipeDetail' recipe.id %}" class="btn btn-primary">View Recipe</a>
+                    {% if request.user.is_authenticated %}
+                        <form action="{% url 'saveRecipe' recipe.id %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Save Recipe</button>
+                        </form>
+                    {% else %}
+                        <p><a href="{% url 'login' %}">Log in</a> to save this recipe.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No recipes found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

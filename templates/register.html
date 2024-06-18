@@ -1,0 +1,37 @@
+{% extends 'header.html'%}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Register</h2>
+        <form  method="post" class="needs-validation" >
+            {% csrf_token %}
+            <div class="form-group ">
+                <label for="email" class="form-label">EmailID: </label>
+                <input type="email" id="email" name="email" class="form-control" required>
+                {{ form.email.errors }}
+                <!-- {{ form.email }} -->
+            <div class="form-group ">
+                <label for="username" class="form-label">Username: </label>
+                <input type="text" id="username" name="username" class="form-control" required>
+                {{ form.username.errors }}
+                 <!-- {{ form.username }} -->
+            </div>
+            <div class="form-group ">
+                <label for="password1" class="form-label">Password: </label>
+                <input type="password" id="password1" name="password1" class="form-control" required>
+                {{ form.password1.errors }}
+                 <!-- {{ form.password1 }} -->
+            </div>
+            <div class="form-group ">
+                <label for="password2" class="form-label">Confirm Password: </label>
+                <input type="password" id="password2" name="password2" class="form-control" required>
+                {{ form.password2.errors }}
+                 <!-- {{ form.password2 }} -->
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary mt-3 btn-lg" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

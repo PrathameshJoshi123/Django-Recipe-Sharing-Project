@@ -1,0 +1,42 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Create a New Recipe</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="img" class="form-label">Image:</label>
+            <input type="file" id="img" name="img" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="cuisine" class="form-label">Cuisine:</label>
+            <input type="text" id="cuisine" name="cuisine" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="ingredients" class="form-label">Ingredients (Seperate with ','):</label>
+            <textarea id="ingredients" name="ingredients" class="form-control" rows="6" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="instructions" class="form-label">Instructions (Seperate with '\'):</label>
+            <textarea id="instructions" name="instructions" class="form-control" rows="8" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="dietary_restrictions" class="form-label">Dietary Restrictions:</label>
+            <input type="text" id="dietary_restrictions" name="dietary_restrictions" class="form-control">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Create Recipe</button>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}

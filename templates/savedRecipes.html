@@ -1,0 +1,36 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Saved Recipes</h2>
+    {% if saved_recipes %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for saved_recipe in saved_recipes %}
+        <div class="col">
+            <div class="card h-100">
+                {% if saved_recipe.recipe.img %}
+                <img src="{{ saved_recipe.recipe.img.url }}" class="card-img-top" alt="{{ saved_recipe.recipe.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ saved_recipe.recipe.title }}</h5>
+                    <p class="card-text">{{ saved_recipe.recipe.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Saved at: {{ saved_recipe.saved_at }}</li>
+                    <li class="list-group-item">Created by: {{ saved_recipe.recipe.created_by.username }}</li>
+                    <li class="list-group-item">Created at: {{ saved_recipe.recipe.created_at }}</li>
+                </ul>
+                <div class="card-footer">
+                    <a href="{% url 'recipeDetail' saved_recipe.recipe.id %}" class="btn btn-primary">View Recipe</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No saved recipes found.</p>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No saved recipes found.</p>
+    {% endif %}
+</div>
+{% endblock %}

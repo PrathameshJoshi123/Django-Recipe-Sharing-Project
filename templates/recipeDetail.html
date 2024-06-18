@@ -1,0 +1,60 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ recipe.title }}</h2>
+                    {% if recipe.img %}
+                    <img src="{{ recipe.img.url }}" class="card-img-top img-fluid mb-3" alt="{{ recipe.title }}">
+                    {% endif %}
+                    <p class="card-text"><strong>Description:</strong> {{ recipe.description }}</p>
+                    <p class="card-text"><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
+                    <p class="card-text"><strong>Ingredients:</strong></p>
+                    <ul>
+                        {% for ingredient in ingredients_list %}
+                        <li>{{ ingredient }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="card-text"><strong>Instructions:</strong></p>
+                    <div>
+                        {% for instruction in instructions_list %}
+                        <p>{{ instruction }}</p>
+                        {% endfor %}
+                    </div>
+                    {% if recipe.dietary_restrictions %}
+                    <p class="card-text"><strong>Dietary Restrictions:</strong> {{ recipe.dietary_restrictions }}</p>
+                    {% endif %}
+                    <p class="card-text"><strong>Created by:</strong> {{ recipe.created_by.username }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Comments</h3>
+                    <ul class="list-unstyled">
+                        {% for comment in comments %}
+                        <li><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</li>
+                        {% empty %}
+                        <li>No comments yet.</li>
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                    <h3 class="card-title">Add a Comment</h3>
+                    <form method="POST" action="{% url 'recipeDetail' recipe.id %}" class="mb-4">
+                        {% csrf_token %}
+                        {{ comment_form.as_p }}
+                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
